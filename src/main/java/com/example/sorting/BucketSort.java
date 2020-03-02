@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BucketSort {
 
     public static void main(String[] args) {
-        int[] arr = new int[] {4, 67, 3, 4, 78, 9, 1, 0, 55, 43, 21, 56, 78, 63, 989, 901, 100};
+        int[] arr = new int[] {4, 7, 3, 4, 8, 9, 1, 0, 5, 4, 1, 6, 8, 3, 9};
         sort(arr);
     }
 
@@ -56,7 +56,7 @@ public class BucketSort {
 
             for (int x = 1; x < total; x++) {
                 if (buckets[x][0] == 0) {
-                    break;
+                    continue;
                 }
                 int[] temp = buckets[x];
                 int[] arr = removeZero(temp);

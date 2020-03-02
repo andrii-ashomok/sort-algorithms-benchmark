@@ -29,9 +29,9 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.examples.benchmark;
+package com.example.benchmark;
 
-import com.examples.sorting.InsertionSort;
+import com.example.sorting.InsertionSort;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Level;

@@ -76,7 +76,7 @@ public class OneWayLinkedList<T> {
             return temp;
         }
 
-        return search(temp.next, t1); // while
+        return search(temp.next, t1); // TODO while
     }
 
     public boolean remove(T t) {

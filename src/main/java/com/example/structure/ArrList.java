@@ -1,7 +1,5 @@
 package com.example.structure;
 
-import java.util.Collection;
-
 public class ArrList<T> {
     private Object[] arr;
     private int capacity = 14;

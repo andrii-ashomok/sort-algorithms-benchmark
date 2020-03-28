@@ -7,8 +7,12 @@ public class Tree {
 
     private Node root;
 
+    public Tree(Node node) {
+        root = node;
+    }
+
     public void print() {
-        Queue<Node> queue = new LinkedList<Node>();
+        Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         int level = 0;
         while (queue.size() != 0) {
@@ -26,25 +30,18 @@ public class Tree {
         }
     }
 
-    public void recurcPrint() {
-        recurcPrint(root);
+    public void recursivePrint() {
+        recursivePrint(root);
     }
 
-    private static void recurcPrint(Node node) {
+    private static void recursivePrint(Node node) {
         if (node == null) {
             return;
         }
 
         System.out.println(node.data);
-        recurcPrint(node.left);
-        recurcPrint(node.right);
-    }
-
-    public void create() {
-        root = new Node(0);
-        root.left = new Node(1);
-        root.right = new Node(2);
-
+        recursivePrint(node.left);
+        recursivePrint(node.right);
     }
 
     public int max() {
@@ -54,34 +51,89 @@ public class Tree {
     private static int max(Node node) {
         int max = node.data;
         if (node.left != null) {
-            int leftMax = max(node.left);
-            if (max < leftMax) {
-                max = leftMax;
+            int temp = max(node.left);
+            if (max < temp) {
+                max = temp;
             }
         }
         if (node.right != null) {
-            int leftMax = max(node.right);
-            if (max < leftMax) {
-                max = leftMax;
+            int temp = max(node.right);
+            if (max < temp) {
+                max = temp;
             }
         }
         return max;
     }
 
-    private static class Node {
-        public int data;
-        public Node left;
-        public Node right;
+    public int min() {
+        return min(root);
+    }
+
+    private static int min(Node node) {
+        int min = node.data;
+        if (node.left != null) {
+            int temp = min(node.left);
+            if (min > temp) {
+                min = temp;
+            }
+        }
+        if (node.right != null) {
+            int temp = min(node.right);
+            if (min > temp) {
+                min = temp;
+            }
+        }
+        return min;
+    }
+
+    public int count() {
+        return count(root) + 1;
+    }
+
+    private static int count(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int count = 0;
+        if (node.left != null) {
+            count += 1 + count(node.left);
+        }
+        if (node.right != null) {
+            count += 1 + count(node.right);
+        }
+
+        return count;
+    }
+
+    public static class Node {
+        private final int data;
+        private Node left;
+        private Node right;
 
         public Node(int data) {
             this.data = data;
         }
-    }
 
-    public static void main(String[] args) {
-        Tree tree = new Tree();
-        tree.create();
-        tree.recurcPrint();
+        public void setLeft(Node left) {
+            this.left = left;
+        }
+
+        public void setRight(Node right) {
+            this.right = right;
+        }
+
+        public int getData() {
+            return data;
+        }
+
+        public Node getLeft() {
+            return left;
+        }
+
+        public Node getRight() {
+            return right;
+        }
     }
 
 }

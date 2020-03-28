@@ -1,6 +1,5 @@
 package com.example.structure;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -14,38 +13,27 @@ public class TreeTest {
 
     @Test
     public void max() {
-        Tree.Node root = new Tree.Node(ROOT_DATA);
-        System.out.println("Root data is: " + root.getData());
-        fillLeftTree(LEFT_LEVEL, root);
-        System.out.println("Left root data is: " + root.getLeft().getData());
-        fillRightTree(RIGHT_LEVEL, root.getRight());
-        System.out.println("Right root data is: " + root.getRight().getData());
-        Tree tree = new Tree(root);
-        tree.max();
+        generate().max();
     }
 
     @Test
     public void min() {
-        Tree.Node root = new Tree.Node(ROOT_DATA);
-        System.out.println("Root data is: " + root.getData());
-        fillLeftTree(LEFT_LEVEL, root);
-        System.out.println("Left root data is: " + root.getLeft().getData());
-        fillRightTree(RIGHT_LEVEL, root.getRight());
-        System.out.println("Right root data is: " + root.getRight().getData());
-        Tree tree = new Tree(root);
-        tree.min();
+        generate().min();
     }
 
     @Test
     public void count() {
+        generate().count();
+    }
+
+    private Tree generate() {
         Tree.Node root = new Tree.Node(ROOT_DATA);
         System.out.println("Root data is: " + root.getData());
         fillLeftTree(LEFT_LEVEL, root);
         System.out.println("Left root data is: " + root.getLeft().getData());
         fillRightTree(RIGHT_LEVEL, root.getRight());
         System.out.println("Right root data is: " + root.getRight().getData());
-        Tree tree = new Tree(root);
-        tree.count();
+        return new Tree(root);
     }
 
     private void fillLeftTree(int n, Tree.Node node) {

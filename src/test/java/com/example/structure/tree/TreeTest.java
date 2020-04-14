@@ -1,4 +1,4 @@
-package com.example.structure;
+package com.example.structure.tree;
 
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ public class TreeTest {
     }
 
     private Tree generate() {
-        Tree.Node root = new Tree.Node(ROOT_DATA);
+        Node root = new Node(ROOT_DATA);
         System.out.println("Root data is: " + root.getData());
         fillLeftTree(LEFT_LEVEL, root);
         System.out.println("Left root data is: " + root.getLeft().getData());
@@ -36,7 +36,7 @@ public class TreeTest {
         return new Tree(root);
     }
 
-    private void fillLeftTree(int n, Tree.Node node) {
+    private void fillLeftTree(int n, Node node) {
         if (n == 0) {
             return;
         }
@@ -46,20 +46,20 @@ public class TreeTest {
                 int x = ThreadLocalRandom.current().nextInt(MIN_DATA, node.getData());
                 int y = ThreadLocalRandom.current().nextInt(MIN_DATA, node.getData());
                 if (x < y) {
-                    node.setLeft(new Tree.Node(x));
-                    node.setRight(new Tree.Node(y));
+                    node.setLeft(new Node(x));
+                    node.setRight(new Node(y));
                 } else if (x == y) {
                     return;
                 } else {
-                    node.setLeft(new Tree.Node(y));
-                    node.setRight(new Tree.Node(x));
+                    node.setLeft(new Node(y));
+                    node.setRight(new Node(x));
                 }
                 fillLeftTree(n - 1, node.getLeft());
             }
         }
     }
 
-    private void fillRightTree(int n, Tree.Node node) {
+    private void fillRightTree(int n, Node node) {
         if (n == 0) {
             return;
         }
@@ -69,13 +69,13 @@ public class TreeTest {
                 int x = ThreadLocalRandom.current().nextInt(node.getData(), MAX_DATA);
                 int y = ThreadLocalRandom.current().nextInt(node.getData(), MAX_DATA);
                 if (x < y) {
-                    node.setLeft(new Tree.Node(x));
-                    node.setRight(new Tree.Node(y));
+                    node.setLeft(new Node(x));
+                    node.setRight(new Node(y));
                 } else if (x == y) {
                     return;
                 } else {
-                    node.setLeft(new Tree.Node(y));
-                    node.setRight(new Tree.Node(x));
+                    node.setLeft(new Node(y));
+                    node.setRight(new Node(x));
                 }
                 fillRightTree(n - 1, node.getRight());
             }

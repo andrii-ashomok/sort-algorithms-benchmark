@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.Queue;
 
 /*
-*  2 rules:
+*  2 start rules:
 * 1. values are always positive;
 * 2. we sure that there is at least one way;
 *  see graph.png
 * */
 public class AlgorithmDijkstra {
     private static final int DEFAULT = -1;
-    private List<List<Pair<Integer, Integer>>> data;
-    private int from, destination;
+    private final List<List<Pair<Integer, Integer>>> data;
+    private final int from;
+    private final int destination;
 
     public AlgorithmDijkstra(List<List<Pair<Integer, Integer>>> data, int from, int destination) {
         this.data = data;
@@ -77,8 +78,8 @@ public class AlgorithmDijkstra {
     }
 
     private boolean isAllMarked(boolean[] marked) {
-        for (int i = 0; i < marked.length; i++) {
-            if (!marked[i])
+        for (boolean b : marked) {
+            if (!b)
                 return false;
         }
         return true;

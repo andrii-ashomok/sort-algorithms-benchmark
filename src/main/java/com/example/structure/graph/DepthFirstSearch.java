@@ -3,6 +3,7 @@ package com.example.structure.graph;
 import java.util.ArrayList;
 import java.util.List;
 
+// Поиск в глубину (англ. Depth-first search, DFS) — один из методов обхода графа.
 public class DepthFirstSearch {
 
     List<List<Integer>> lists;
@@ -24,33 +25,36 @@ public class DepthFirstSearch {
         return way;
     }
 
-    private void scan(int top, int destination, boolean[] marked, List<Integer> way) {
+    private boolean scan(int top, int destination, boolean[] marked, List<Integer> way) {
         if (way.contains(destination)) {
-            return;
+            return false;
         }
 
         if (top == -1) {
-            return;
+            return false;
         }
 
-// TODO add rollback elements in the way list
         way.add(top);
         marked[top - 1] = true;
 
         if (top == destination) {
-            return;
+            return false;
         }
 
         List<Integer> destinationFromTop = lists.get(top - 1);
         int elem;
+        boolean noWays = true;
         for (Integer integer : destinationFromTop) {
             elem = integer;
             if (!marked[integer - 1]) {
-                scan(elem, destination, marked, way);
+                noWays = scan(elem, destination, marked, way);
+                if (noWays) {
+                    way.add(top);
+                }
             }
         }
 
-
+        return noWays;
     }
 
 

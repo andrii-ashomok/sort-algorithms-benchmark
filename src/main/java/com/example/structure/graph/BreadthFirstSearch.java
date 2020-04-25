@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+// Поиск в ширину (англ. breadth-first search, BFS) — один из методов обхода графа.
 public class BreadthFirstSearch {
 
     List<List<Integer>> lists;

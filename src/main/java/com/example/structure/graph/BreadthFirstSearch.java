@@ -1,14 +1,19 @@
 package com.example.structure.graph;
 
+import org.apache.commons.math3.util.Pair;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+// Поиск в ширину (англ. breadth-first search, BFS) — один из методов обхода графа.
 public class BreadthFirstSearch {
 
     List<List<Integer>> lists;
     int from; int destination;
+
 
     public BreadthFirstSearch(List<List<Integer>> lists, int from, int destination) {
         this.lists = lists;
@@ -17,33 +22,47 @@ public class BreadthFirstSearch {
     }
 
     public List<Integer> findAWay() {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(from);
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        queue.add(new Pair<>(-1, from - 1));
         List<Integer> ways = new ArrayList<>();
         boolean[] marked = new boolean[lists.size()];
+        int[] vertex = new int[lists.size()];
+        Arrays.fill(vertex, -1);
 
-        boolean[][] reachability = new boolean[lists.size()][lists.size()];
-        for (int i = 0; i < lists.size(); i++) {
-            reachability[i][i] = true;
-        }
         while (!queue.isEmpty()) {
-            int elem = queue.remove();
-            if (!marked[elem - 1]) {
-                marked[elem - 1] = true;
-                List<Integer> child = lists.get(elem - 1);
+            Pair<Integer, Integer> pair = queue.remove();
+            int elem = pair.getSecond();
+            vertex[elem] = pair.getFirst();
+            if (elem == destination - 1) {
+                break;
+            }
+
+            if (!marked[elem]) {
+                marked[elem] = true;
+                List<Integer> child = lists.get(elem);
                 for (Integer i : child) {
-                    queue.add(i);
-                    reachability[elem - 1][i - 1] = true;
+                    if (!marked[i - 1]) {
+                        queue.add(new Pair<>(elem, i - 1));
+                    }
                 }
             }
         }
 
         ways.add(destination);
+        int temp = destination;
+        while (temp != from) {
+            temp = vertex[temp - 1];
+            if (temp == -1) {
+                System.err.println("Vertex is not reachable");
+                ways.clear();
+                return ways;
+            }
+            temp = temp + 1;
+            ways.add(temp);
+        }
+
+
         return ways;
-    }
-
-    private void buildReachability() {
-
     }
 
     public static void main(String[] args) {
@@ -112,12 +131,12 @@ public class BreadthFirstSearch {
         myList.add(twelfthElements);
 
 
-        BreadthFirstSearch graph1 = new BreadthFirstSearch(myList, 1, 4);
+        BreadthFirstSearch graph1 = new BreadthFirstSearch(myList, 1, 2);
         List<Integer> result = graph1.findAWay();
         System.out.println(result);
 
-       /* Graph2 graph2 = new Graph2(myList, 1, 12);
+        BreadthFirstSearch graph2 = new BreadthFirstSearch(myList, 1, 12);
         result = graph2.findAWay();
-        System.out.println(result);*/
+        System.out.println(result);
     }
 }

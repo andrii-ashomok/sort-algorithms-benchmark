@@ -4,6 +4,7 @@ import org.apache.commons.math3.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -61,10 +62,6 @@ public class AlgorithmDijkstra {
                     marked[elem.getFirst()] = true;
                 }
             }
-
-            /*if (isAllMarked(marked)) {
-                break;
-            }*/
         }
 
         ways.add(destination);
@@ -74,15 +71,8 @@ public class AlgorithmDijkstra {
             ways.add(temp);
         }
 
+        Collections.reverse(ways);
         return ways;
-    }
-
-    private boolean isAllMarked(boolean[] marked) {
-        for (boolean b : marked) {
-            if (!b)
-                return false;
-        }
-        return true;
     }
 
     private int getWeight(int x, int y) {
@@ -96,8 +86,53 @@ public class AlgorithmDijkstra {
         return  0;
     }
 
-    // TODO write MAX way
-    public void findMaxWay() {
+
+    public List<Integer> findMaxWay() {
+        // key -  parent, val - child
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        int[] vertex = new int[data.size()];
+        int[] distances = new int[data.size()];
+        Arrays.fill(vertex, DEFAULT);
+        Arrays.fill(distances, DEFAULT);
+        List<Integer> ways = new ArrayList<>();
+        boolean[] marked = new boolean[data.size()];
+
+        queue.add(new Pair<>(DEFAULT, from));
+        distances[from] = 0;
+
+        while (!queue.isEmpty()) {
+            Pair<Integer, Integer> elem = queue.remove();
+            int newDistance = 0;
+            if (elem.getFirst() != DEFAULT) {
+                newDistance = distances[elem.getFirst()] + getWeight(elem.getFirst(), elem.getSecond());
+            }
+
+            if (!marked[elem.getSecond()]) {
+                if (distances[elem.getSecond()] == DEFAULT || distances[elem.getSecond()] < newDistance) {
+                    vertex[elem.getSecond()] = elem.getFirst();
+                    distances[elem.getSecond()] = newDistance;
+                }
+
+                List<Pair<Integer, Integer>> children = data.get(elem.getSecond());
+                for (Pair<Integer, Integer> child : children) {
+                    queue.add(new Pair<>(elem.getSecond(), child.getFirst()));
+                }
+
+                if (elem.getFirst() != DEFAULT) {
+                    marked[elem.getFirst()] = true;
+                }
+            }
+        }
+
+        ways.add(destination);
+        int temp = destination;
+        while (temp != from) {
+            temp = vertex[temp];
+            ways.add(temp);
+        }
+
+        Collections.reverse(ways);
+        return ways;
     }
 
     public static void main(String[] args) {
@@ -143,10 +178,13 @@ public class AlgorithmDijkstra {
         sixthElements.add(new Pair<>(1, 4));
         myList.add(sixthElements);
 
-        AlgorithmDijkstra dijkstra = new AlgorithmDijkstra(myList, 0, 6);
+        AlgorithmDijkstra dijkstra = new AlgorithmDijkstra(myList, 0, 1);
         List<Integer> result = dijkstra.findMinWay();
-        System.out.println(result);
+        System.out.println("Min way: " + result);
 
+        dijkstra = new AlgorithmDijkstra(myList, 0, 1);
+        result = dijkstra.findMaxWay();
+        System.out.println("Max way: " + result);
     }
 
 }

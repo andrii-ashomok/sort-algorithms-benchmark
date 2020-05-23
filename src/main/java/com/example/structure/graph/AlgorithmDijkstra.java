@@ -43,23 +43,23 @@ public class AlgorithmDijkstra {
         while (!queue.isEmpty()) {
             Pair<Integer, Integer> elem = queue.remove();
             int newDistance = 0;
-            if (elem.getFirst() != DEFAULT) {
-                newDistance = distances[elem.getFirst()] + getWeight(elem.getFirst(), elem.getSecond());
+            if (elem.getKey() != DEFAULT) {
+                newDistance = distances[elem.getKey()] + getWeight(elem.getKey(), elem.getValue());
             }
 
-            if (distances[elem.getSecond()] == DEFAULT || distances[elem.getSecond()] > newDistance) {
-                vertex[elem.getSecond()] = elem.getFirst();
-                distances[elem.getSecond()] = newDistance;
+            if (distances[elem.getValue()] == DEFAULT || distances[elem.getValue()] > newDistance) {
+                vertex[elem.getValue()] = elem.getKey();
+                distances[elem.getValue()] = newDistance;
             }
 
-            if (!marked[elem.getSecond()]) {
-                List<Pair<Integer, Integer>> children = data.get(elem.getSecond());
+            if (!marked[elem.getValue()]) {
+                List<Pair<Integer, Integer>> children = data.get(elem.getValue());
                 for (Pair<Integer, Integer> child : children) {
-                    queue.add(new Pair<>(elem.getSecond(), child.getFirst()));
+                    queue.add(new Pair<>(elem.getValue(), child.getKey()));
                 }
 
-                if (elem.getFirst() != DEFAULT) {
-                    marked[elem.getFirst()] = true;
+                if (elem.getKey() != DEFAULT) {
+                    marked[elem.getKey()] = true;
                 }
             }
         }
@@ -78,8 +78,8 @@ public class AlgorithmDijkstra {
     private int getWeight(int x, int y) {
         List<Pair<Integer, Integer>> from = data.get(x);
         for (Pair<Integer, Integer> pair : from) {
-            if (pair.getFirst() == y) {
-                return pair.getSecond();
+            if (pair.getKey() == y) {
+                return pair.getValue();
             }
         }
 
@@ -103,23 +103,23 @@ public class AlgorithmDijkstra {
         while (!queue.isEmpty()) {
             Pair<Integer, Integer> elem = queue.remove();
             int newDistance = 0;
-            if (elem.getFirst() != DEFAULT) {
-                newDistance = distances[elem.getFirst()] + getWeight(elem.getFirst(), elem.getSecond());
+            if (elem.getKey() != DEFAULT) {
+                newDistance = distances[elem.getKey()] + getWeight(elem.getKey(), elem.getValue());
             }
 
-            if (!marked[elem.getSecond()]) {
-                if (distances[elem.getSecond()] == DEFAULT || distances[elem.getSecond()] < newDistance) {
-                    vertex[elem.getSecond()] = elem.getFirst();
-                    distances[elem.getSecond()] = newDistance;
+            if (!marked[elem.getValue()]) {
+                if (distances[elem.getValue()] == DEFAULT || distances[elem.getValue()] < newDistance) {
+                    vertex[elem.getValue()] = elem.getKey();
+                    distances[elem.getValue()] = newDistance;
                 }
 
-                List<Pair<Integer, Integer>> children = data.get(elem.getSecond());
+                List<Pair<Integer, Integer>> children = data.get(elem.getValue());
                 for (Pair<Integer, Integer> child : children) {
-                    queue.add(new Pair<>(elem.getSecond(), child.getFirst()));
+                    queue.add(new Pair<>(elem.getValue(), child.getKey()));
                 }
 
-                if (elem.getFirst() != DEFAULT) {
-                    marked[elem.getFirst()] = true;
+                if (elem.getKey() != DEFAULT) {
+                    marked[elem.getKey()] = true;
                 }
             }
         }
